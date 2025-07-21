@@ -1,14 +1,33 @@
 import React, {useState} from "react";
 import Mundial from '../assets/imagens/mundial.png';
-
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
  const LoginForm = () =>{
     const [email ,setEmail] = useState('')
     const [senha ,setSenha] = useState('')
-
-    const handleSubmit = (e) =>{
+    const navigate = useNavigate();  // Obtem função de navegação
+ 
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        alert(`Email: ${email} \nSenha:${senha}`)
-    }
+        try {
+            const response = await axios.post("http://localhost:5000/api/auth/login", {
+                email,
+                password : senha
+            })
+
+            const userData = response.data;
+            localStorage.setItem("user", JSON.stringify(userData))
+
+            alert("usuario logado com sucesso!!")
+            navigate("/")
+        }   catch (error) {
+            if (error.response) {
+                alert("erro no email ou usuario")
+            } else {
+                alert("erro ao conectar ao servidor")
+            }
+        }
+    };
 
 
 

@@ -1,28 +1,41 @@
 import React, { useState } from "react";
 import aren from "../assets/imagens/aren.png";
+import axios from 'axios'
 
 const ContactForm = () => {
     const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        message: '',
+      name: "",
+      email: "",
+      message: "",
     });
-
+   
     const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
+      setFormData({
+        ...formData,
+        [e.target.name]: e.target.value,
+      });
     };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(`Mensagem enviada: ${formData.name}, ${formData.email}`);
-        console.log(`${formData.message}`);
-        alert('Mensagem enviada com sucesso!');
-        setFormData({ name: '', email: '', message: '' });
-    };
-
+   
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      try {
+          const response = await axios.post("http://localhost:5000/api/contacts", {
+              name: formData.name,
+              email: formData.email,
+              message: formData.message,
+          });
+          alert("menssagem cadastrada com sucesso!!" + `nome: ${formData.name} email: ${formData.email}`)
+          window.location.href = "/"
+      } catch (error) {
+          if (error.response) {
+              alert("Erro ao cadastrar usuário")
+          } else {
+              alert("erro ao conectar ao servidor")
+          }
+      }
+  };
+   
+   
     return (
         <div
             className="min-h-screen bg-cover bg-center flex items-center justify-center px-4 py-8"

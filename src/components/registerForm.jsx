@@ -1,17 +1,33 @@
 import React, {useState} from "react";
 import Reg from '../assets/imagens/reg.png';
-
+import axios from 'axios'
  const LoginForm = () =>{
     const [nome ,setName] = useState('')
     const [email ,setEmail] = useState('')
     const [senha ,setSenha] = useState('')
 
-    const handleSubmit = (e) =>{
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        alert(`Name: ${name} Email: ${email} \nSenha:${senha}`)
-    }
+        
+        try {
+            const response = await axios.post("http://localhost:5000/api/users", {
+                name: nome,
+                email,
+                password : senha
+            });
 
+            alert("Usuario cadastrado com sucesso aoba!!" + `nome: ${response.data.name} email: ${response.data.email}`)
+            window.location.href = "/login"
+        } catch (error) {
+            if(error.response){
+                alert ("erro ao cadastrar usuario")
+            } else{
+                alert("erro no servidor meu bom")
+            }
+        }
 
+    };
+    
 
     return(
         
