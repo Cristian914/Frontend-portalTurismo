@@ -10,7 +10,7 @@ import axios from 'axios'
         e.preventDefault();
         
         try {
-            const response = await axios.post("http://localhost:5000/api/users", {
+            const response = await axios.post("https://backend-portalturismo-wd1t.onrender.com/api/users", {
                 name: nome,
                 email,
                 password : senha

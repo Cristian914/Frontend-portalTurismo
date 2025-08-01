@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: 'http://localhost:5000/api'
+    baseURL: 'https://backend-portalturismo-wd1t.onrender.com/api'
 })
 
 export default api;
